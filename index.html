@@ -2,12 +2,298 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#faf7f0" />
-<meta http-equiv="refresh" content="0; url=Horizon%20Landing.html" />
-<link rel="canonical" href="Horizon%20Landing.html" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <title>Horizon</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; font-family:'Inter Tight', system-ui, sans-serif; color:#0a0e14; }
+  html { background-color: #0a0e14; }
+  body { background: transparent; }
+  * { box-sizing:border-box; }
+  ::selection { background:#5ab8ea66; }
+  input::placeholder { color:#0a0e14; opacity:0.85; }
+  input::-webkit-input-placeholder { color:#0a0e14; opacity:0.85; }
+  @keyframes fadeInLate { from { opacity:0; } to { opacity:1; } }
+  @keyframes heroFadeUp {
+    from { opacity:0; transform:translateY(14px); filter:blur(6px); }
+    to   {            transform:translateY(0);    filter:blur(0); }
+  }
+  [data-hero] > * {
+    animation: heroFadeUp 900ms cubic-bezier(0.22, 0.68, 0.18, 1) both;
+    will-change: opacity, transform, filter;
+  }
+  [data-hero] > *:nth-child(1) { animation-delay: 80ms; }
+  [data-hero] > *:nth-child(2) { animation-delay: 240ms; }
+  [data-hero] > *:nth-child(3) { animation-delay: 400ms; }
+  [data-hero] > *:nth-child(4) { animation-delay: 560ms; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero] > * { animation: none; opacity: 1; }
+  }
+
+  /* ============ Scroll reveal ============ */
+  [data-reveal],
+  [data-bento] > *,
+  [data-pricing-cards] > * {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(4px);
+    transition:
+      opacity 850ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      transform 850ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      filter 850ms cubic-bezier(0.22, 0.68, 0.18, 1);
+    will-change: opacity, transform, filter;
+  }
+  [data-reveal].is-revealed,
+  [data-bento] > *.is-revealed,
+  [data-pricing-cards] > *.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  /* Stagger inside bento and pricing rows */
+  [data-bento] > *:nth-child(1) { transition-delay: 0ms; }
+  [data-bento] > *:nth-child(2) { transition-delay: 90ms; }
+  [data-bento] > *:nth-child(3) { transition-delay: 60ms; }
+  [data-bento] > *:nth-child(4) { transition-delay: 150ms; }
+  [data-bento] > *:nth-child(5) { transition-delay: 120ms; }
+  [data-bento] > *:nth-child(6) { transition-delay: 210ms; }
+  [data-pricing-cards] > *:nth-child(1) { transition-delay: 0ms; }
+  [data-pricing-cards] > *:nth-child(2) { transition-delay: 110ms; }
+  [data-pricing-cards] > *:nth-child(3) { transition-delay: 220ms; }
+
+  /* ============ Card hover micro-interactions ============ */
+  /* Once revealed, switch transitions to a faster timing so hover feels responsive */
+  [data-bento] > *.is-revealed,
+  [data-pricing-cards] > *.is-revealed {
+    transition:
+      transform 380ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      box-shadow 380ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      background 380ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      border-color 380ms cubic-bezier(0.22, 0.68, 0.18, 1);
+    transition-delay: 0ms !important;
+  }
+  [data-bento] > *.is-revealed:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.85) inset,
+      0 -1px 0 rgba(255,255,255,0.22) inset,
+      0 28px 56px -22px rgba(14, 42, 74, 0.32),
+      0 10px 24px -12px rgba(14, 42, 74, 0.18);
+  }
+  [data-pricing-cards] > *.is-revealed:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.85) inset,
+      0 -1px 0 rgba(255,255,255,0.25) inset,
+      0 36px 72px -24px rgba(14, 42, 74, 0.36),
+      0 12px 28px -12px rgba(14, 42, 74, 0.20);
+  }
+  /* Feature pills (Stripe, PayPal, …) — subtle hover brighten */
+  [data-int-pills] > * {
+    transition:
+      transform 260ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      background 260ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      box-shadow 260ms cubic-bezier(0.22, 0.68, 0.18, 1);
+  }
+  [data-int-pills] > *:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,0.6) !important;
+    box-shadow: 0 6px 14px -6px rgba(14, 42, 74, 0.18);
+  }
+  /* Subtle nav CTA hover */
+  [data-nav-cta] {
+    transition:
+      transform 220ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      box-shadow 220ms cubic-bezier(0.22, 0.68, 0.18, 1),
+      background 220ms cubic-bezier(0.22, 0.68, 0.18, 1) !important;
+  }
+  [data-nav-cta]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -10px rgba(14, 22, 38, 0.45);
+  }
+  [data-nav-contact]:hover {
+    background: rgba(255,255,255,0.45);
+    opacity: 1 !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-bento] > *.is-revealed:hover,
+    [data-pricing-cards] > *.is-revealed:hover,
+    [data-int-pills] > *:hover,
+    [data-nav-cta]:hover { transform: none; }
+  }
+
+  /* ============ Country flag marquee ============ */
+  @keyframes flagMarquee {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+  [data-flag-track] {
+    animation: flagMarquee 60s linear infinite;
+    will-change: transform;
+  }
+  [data-flag-track]:hover { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-flag-track] { animation: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal],
+    [data-bento] > *,
+    [data-pricing-cards] > * {
+      opacity: 1; transform: none; filter: none; transition: none;
+    }
+  }
+
+  /* ============ Mobile responsive overrides ============ */
+  @media (max-width: 768px) {
+    /* Hero — tighter padding so it fits viewport, vertically centered */
+    [data-hero] {
+      padding: 110px 20px 80px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    [data-hero] > * {
+      width: 100% !important;
+    }
+    [data-hero] h1 {
+      font-size: clamp(40px, 11vw, 56px) !important;
+    }
+    [data-hero] p {
+      font-size: 15.5px !important;
+    }
+
+    /* Capabilities section */
+    [data-capabilities] {
+      padding: 56px 20px 56px !important;
+    }
+    [data-capabilities] h2 {
+      font-size: clamp(32px, 8vw, 40px) !important;
+    }
+    [data-capabilities] [data-bento] {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+    }
+    [data-capabilities] [data-bento] > * {
+      grid-column: 1 / -1 !important;
+      grid-row: auto !important;
+      padding: 24px 22px !important;
+    }
+    [data-capabilities] [data-bento] [data-tile-accounts-items] {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+    }
+    [data-tile-integrations] {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 12px !important;
+      padding: 18px 22px !important;
+    }
+    [data-tile-integrations] [data-int-pills] {
+      justify-content: flex-start !important;
+    }
+
+    /* Pricing */
+    [data-pricing] {
+      padding: 56px 20px 80px !important;
+    }
+    [data-pricing] h1 {
+      font-size: clamp(34px, 8.5vw, 44px) !important;
+    }
+    [data-pricing-cards] {
+      flex-direction: column !important;
+      gap: 28px !important;
+    }
+    [data-pricing-cards] > * {
+      flex: 1 1 auto !important;
+      width: 100% !important;
+      transform: none !important;
+    }
+
+    /* Nav — tighter padding, smaller waitlist button */
+    [data-nav] {
+      padding: 10px 14px 10px 16px !important;
+    }
+    [data-nav-links] {
+      gap: 18px !important;
+      font-size: 12.5px !important;
+    }
+    [data-nav-cta] {
+      padding: 8px 13px !important;
+      font-size: 12.5px !important;
+    }
+
+    /* Countries — text above flags, centered (no overlay) */
+    [data-countries] {
+      padding: 96px 0 96px !important;
+    }
+    [data-countries-headline] {
+      position: static !important;
+      transform: none !important;
+      width: auto !important;
+      max-width: 560px !important;
+      margin: 0 auto 28px !important;
+      padding: 0 24px !important;
+      text-align: center !important;
+    }
+    [data-countries-headline] h2 {
+      font-size: clamp(32px, 9vw, 44px) !important;
+    }
+    [data-countries-flags] > div {
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%) !important;
+      mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%) !important;
+    }
+
+    /* Agents — stack with card below text, centered, no min-width overflow */
+    [data-agents] {
+      padding: 64px 20px 64px !important;
+    }
+    [data-agents-grid] {
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
+    }
+    [data-agents-grid] > div:first-child {
+      text-align: center !important;
+    }
+    [data-agents-grid] > div:first-child > div:last-child {
+      justify-content: center !important;
+    }
+    [data-agents-grid] > div:first-child p {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    [data-agents-grid] > div:last-child {
+      max-width: 480px !important;
+      margin: 0 auto !important;
+      width: 100% !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Hide center nav links entirely on tiny screens — keep brand + CTA */
+    [data-nav-links] {
+      display: none !important;
+    }
+    [data-nav] {
+      width: calc(100% - 24px) !important;
+    }
+  }
+</style>
 </head>
 <body>
-<script>location.replace('Horizon%20Landing.html');</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<div id="root"></div>
+
+<script type="text/babel" src="horizon-landing.jsx"></script>
+
 </body>
 </html>
