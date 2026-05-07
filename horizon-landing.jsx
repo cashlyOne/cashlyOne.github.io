@@ -1321,7 +1321,7 @@ const AgentsSection = () => (
     padding:'144px 48px 144px',
     position:'relative', zIndex:1,
   }}>
-    <div style={{
+    <div data-agents-grid style={{
       display:'grid',
       gridTemplateColumns:'repeat(auto-fit, minmax(360px, 1fr))',
       gap:48, alignItems:'center',
@@ -1429,7 +1429,7 @@ const CountriesSection = () => (
       {/* Text overlay on the left — vertically centered against the flag bands.
           Flags fade out before reaching it (mask), so the top row visually flows
           INTO the text and the bottom row (reversed) emerges from BEHIND it. */}
-      <div data-reveal style={{
+      <div data-reveal data-countries-headline style={{
         position:'absolute',
         top:'50%', left:24, transform:'translateY(-50%)',
         zIndex:2,
@@ -1449,7 +1449,7 @@ const CountriesSection = () => (
       </div>
 
       {/* Flag bands — fade transparent in the left ~38% (where the text sits) */}
-      <div data-reveal style={{
+      <div data-reveal data-countries-flags style={{
         display:'flex', flexDirection:'column', gap:12,
       }}>
         <div style={{

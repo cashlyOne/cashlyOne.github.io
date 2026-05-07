@@ -218,6 +218,51 @@
       padding: 8px 13px !important;
       font-size: 12.5px !important;
     }
+
+    /* Countries — text above flags, centered (no overlay) */
+    [data-countries] {
+      padding: 96px 0 96px !important;
+    }
+    [data-countries-headline] {
+      position: static !important;
+      transform: none !important;
+      width: auto !important;
+      max-width: 560px !important;
+      margin: 0 auto 28px !important;
+      padding: 0 24px !important;
+      text-align: center !important;
+    }
+    [data-countries-headline] h2 {
+      font-size: clamp(32px, 9vw, 44px) !important;
+    }
+    [data-countries-flags] > div {
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%) !important;
+      mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%) !important;
+    }
+
+    /* Agents — stack with card below text, centered, no min-width overflow */
+    [data-agents] {
+      padding: 64px 20px 64px !important;
+    }
+    [data-agents-grid] {
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
+    }
+    [data-agents-grid] > div:first-child {
+      text-align: center !important;
+    }
+    [data-agents-grid] > div:first-child > div:last-child {
+      justify-content: center !important;
+    }
+    [data-agents-grid] > div:first-child p {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    [data-agents-grid] > div:last-child {
+      max-width: 480px !important;
+      margin: 0 auto !important;
+      width: 100% !important;
+    }
   }
 
   @media (max-width: 480px) {
