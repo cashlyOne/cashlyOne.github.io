@@ -425,9 +425,9 @@ const Hero = () => {
 
   return (
   <div data-hero style={{
-    maxWidth:980, margin:'0 auto', padding:'160px 48px 120px',
+    maxWidth:980, margin:'0 auto', padding:'160px 48px 64px',
     position:'relative', zIndex:1,
-    minHeight:'100vh',
+    minHeight:'86vh',
     boxSizing:'border-box',
     textAlign:'center',
   }}>
@@ -618,7 +618,7 @@ const PartnersMarquee = () => (
           alt={name}
           style={{
             height:h, width:'auto', display:'block',
-            filter:'brightness(0)', opacity:0.4,
+            filter:'brightness(0)', opacity:0.55,
             flex:'0 0 auto',
           }}
         />
