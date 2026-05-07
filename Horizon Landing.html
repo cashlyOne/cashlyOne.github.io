@@ -148,9 +148,16 @@
 
   /* ============ Mobile responsive overrides ============ */
   @media (max-width: 768px) {
-    /* Hero — tighter padding so it fits viewport */
+    /* Hero — tighter padding so it fits viewport, vertically centered */
     [data-hero] {
       padding: 110px 20px 80px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    [data-hero] > * {
+      width: 100% !important;
     }
     [data-hero] h1 {
       font-size: clamp(40px, 11vw, 56px) !important;
