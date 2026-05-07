@@ -274,6 +274,9 @@ const Nav = () => {
       </div>
 
       <div data-nav-links style={{
+        position:'absolute',
+        left:'50%', top:'50%',
+        transform:'translate(-50%, -50%)',
         display:'flex', alignItems:'center', gap:32,
         fontFamily:GEIST, fontSize:13.5, fontWeight:500, color:C.ink,
         opacity: scrolled ? 0 : 1,
