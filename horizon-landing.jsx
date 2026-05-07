@@ -464,6 +464,12 @@ const Hero = () => {
     {/* Glass CTA cluster — relative positioning so the ink button can slide */}
     <div
       ref={pillRef}
+      onClick={() => {
+        if (!open && !submitted && !submitting) {
+          inputRef.current && inputRef.current.focus();
+          setOpen(true);
+        }
+      }}
       style={{
         position:'relative',
         display:'inline-flex', alignItems:'center',
@@ -478,7 +484,8 @@ const Hero = () => {
           0 -1px 0 rgba(255,255,255,0.18) inset,
           0 16px 40px -14px rgba(14, 42, 74, 0.22)
         `,
-        width: open ? 'min(540px, 92vw)' : (closedWidth ? `${closedWidth}px` : 'auto'),
+        width: open ? 'min(540px, 96vw)' : (closedWidth ? `${closedWidth}px` : 'auto'),
+        cursor: !open && !submitted ? 'pointer' : 'default',
         transition: open
           ? 'width 900ms cubic-bezier(0.22, 0.68, 0.18, 1)'
           : 'width 700ms cubic-bezier(0.32, 0.72, 0.24, 1)',
@@ -493,7 +500,7 @@ const Hero = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="welcome@horizon.com"
-        disabled={!open || submitted}
+        disabled={submitted}
         style={{
           flex: open ? 1 : '0 0 0px',
           width: open ? 'auto' : 0,
@@ -511,14 +518,18 @@ const Hero = () => {
         onKeyDown={(e) => { if (e.key === 'Escape') setOpen(false); }}
       />
 
-      {/* "Get early access" — fades out when waitlist button slides over it */}
+      {/* "Get early access" — fades out + collapses width when pill expands */}
       <span style={{
-        padding:'12px 22px 12px 18px',
+        padding: open ? '12px 0' : '12px 22px 12px 18px',
+        maxWidth: open ? 0 : 'none',
         fontFamily:GEIST, fontSize:13.5, fontWeight:500, color:C.ink,
         opacity: open ? 0 : 0.85,
         whiteSpace:'nowrap',
         pointerEvents:'none',
-        transition: open ? 'opacity 280ms ease' : 'opacity 320ms ease 320ms',
+        overflow:'hidden',
+        transition: open
+          ? 'opacity 220ms ease, max-width 600ms cubic-bezier(0.22, 0.68, 0.18, 1), padding 600ms cubic-bezier(0.22, 0.68, 0.18, 1)'
+          : 'opacity 320ms ease 320ms, max-width 600ms cubic-bezier(0.32, 0.72, 0.24, 1), padding 600ms cubic-bezier(0.32, 0.72, 0.24, 1)',
         order: 2,
         flex:'0 0 auto',
       }}>
